@@ -604,32 +604,32 @@ conf t
 !
  voice register global
   mode cme
-  source-address 10._.100.8 port 5060
+  source-address 10.71.100.8 port 5060
   max-dn 12
   max-pool 12
   authenticate register
   create profile sync
  voice register dn 1
-   number ____
+   number 7181
    allow watch
-   name _______
+   name 7181
  voice register dn 2
-   number ___
+   number 7182
    allow watch
-   name _______
+   name 7182
 !
   voice register pool 1
-    id mac ____.____.____
+    id mac e87f.6bfd.b15e
     number 1 dn 1
     dtmf-relay sip-notify
-    username ____ password ____
+    username 7181 password 7181
     codec g711ulaw
 !
   voice register pool 2
-    id mac ____.____.____
+    id mac 78d8.4091.248b
     number 1 dn 2
     dtmf-relay sip-notify
-    username ____ password ____
+    username 7182 password 7182
     codec g711ulaw
 !
 *******call other countries!!!********
