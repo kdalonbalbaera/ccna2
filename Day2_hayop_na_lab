@@ -1,0 +1,137 @@
+@D1
+
+conf t 
+vlan 300
+name chevronmktg
+exit
+int vlan 300
+no shut
+ip add 10.0.8.1 255.255.248.0
+ip dhcp excluded-address 10.0.8.1 10.0.8.100
+ip dhcp pool chevmktgvlan300
+network 10.0.8.0 255.255.248.0
+default-router 10.0.8.1
+dns-server 8.8.8.8
+domain-name chevron.com
+option 150 ip 10.0.8.1
+end
+
+
+@A2
+conf t
+int e1/0
+switchport mode access
+switchport access vlan 300
+shut
+no shut
+
+@p2
+conf t
+int e1/0
+no shut
+ip address dhcp
+do bp
+
+
+
+
+
+@D1 CHEVRON SALES VLAN 400
+
+conf t 
+vlan 400
+name chevronsales
+exit
+int vlan 400
+no shut
+ip add 10.0.16.1 255.255.240.0
+ip dhcp excluded-address 10.0.16.1 10.0.16.100
+ip dhcp pool chevsalesvlan400
+network 10.0.16.0 255.255.240.0
+default-router 10.0.16.1
+dns-server 8.8.8.8
+domain-name chevron.com
+option 150 ip 10.0.16.1
+end
+
+
+@A1
+conf t
+int e0/0
+switchport mode access
+switchport access vlan 400
+shut
+no shut
+
+@P1
+conf t
+int e0/0
+no shut
+ip address dhcp
+do bp
+
+
+
+@D1: DNS SERVER
+
+conf t
+vlan 500
+name DNSSERVERS
+exit
+int vlan 500
+no shu
+ip add 10.0.0.17 255.255.255.240
+ip dhcp excluded-address 10.0.0.1 10.0.0.17
+ip dhcp pool dnsserversVlan
+network 10.0.0.17 255.255.255.240
+default-router 10.0.0.17
+dns-server 8.8.8.8
+domain-name chevron.com
+option 150 ip 10.0.0.17
+exit
+
+
+@S1
+conf t
+int e1/0
+no shu
+ip address dhcp
+do bp
+
+@D1 PRIVATE CLOUD SERVER
+conf t
+vlan 600
+name PRIVATECLOUDSERVER
+exit
+int vlan 600
+no shu
+ip add 10.0.0.129 255.255.255.128
+ip dhcp excluded-address 10.0.0.129 10.0.0.139
+ip dhcp pool privatecloudserversVlan
+network 10.0.0.128 255.255.255.128
+default-router 10.0.0.129
+dns-server 8.8.8.8
+domain-name chevron.com
+option 150 ip 10.0.0.129
+exit
+
+
+
+
+@D2
+conf t
+int e1/0
+switchport mode access
+switchport access vlan 600
+shut
+no shut
+
+
+@S2
+conf t
+int e1/0
+no shu
+ip address dhcp
+do bp
+
+
