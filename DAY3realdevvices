@@ -1,12 +1,12 @@
 TROUBLESHOOTING AND DIAGNOSTIC FOR NETWORK ENGINEERS:
 EXPERIENCE >>> CERTIFIED, lethal = XP + Certified + Englishero = 3threesome.
 ping test: via windows Cmd:    if Fails
-ping 10.m.1.10               cable unplugged, wrong IP, Duplicate: 169.254.x.x
-ping 10.m.1.4                no Vlan, wrong Vlan, sw: sh vlan brief
-ping 10.m.100.4              type "IP routing" on SW, 
-ping 10.m.m.4                check FIberUplinkSwitch= sh run int gi 0/1
+ping 10.71.1.10               cable unplugged, wrong IP, Duplicate: 169.254.x.x
+ping 10.71.1.4                no Vlan, wrong Vlan, sw: sh vlan brief
+ping 1071.100.4              type "IP routing" on SW, 
+ping 10.71.m.4                check FIberUplinkSwitch= sh run int gi 0/1
                              "no switchport"
-ping  10.m.m.1               Edge: sh ip int brief
+ping  10.71.71.1               Edge: sh ip int brief
                              NO routing Configured: CCNA = Job
 ping  200.0.0.m              NO routing Configured: CCNA = Job
 ping 200.0.0.k               KLASSMATE  DID NOT CONFIGURE ROUTING
@@ -20,15 +20,15 @@ TASK1: STATIC ROUTING: Very Cheap, China is King. Home/End Devices.
 VS DYNAMIC ROUTING.
 Static Routing @CUCM:
 config t
-ip route 0.0.0.0  0.0.0.0  10.m.100.4  1
+ip route 0.0.0.0  0.0.0.0  10.71.100.4  1
 
 Static Routing @COREbaba:
 config t
-ip route 0.0.0.0  0.0.0.0  10.m.m.1  1
+ip route 0.0.0.0  0.0.0.0  10.71.71.1  1
 
 @EDGE STATIC ROUTING REVIEW
 config t
-ip route 10.m.0.0 255.255.0.0 10.m.m.4 1
+ip route 10.m.0.0 255.255.0.0 10.71.71.4 1
 ip route 10.11.0.0 255.255.0.0 200.0.0.11 1
 !ip route 10.12.0.0 255.255.0.0 200.0.0.12 1
 ip route 10.21.0.0 255.255.0.0 200.0.0.21 1
@@ -43,24 +43,24 @@ task4: CONFIGURING eigrp FOR ALL switches,cms
        and OSPF for edge cisco,fortinet,palos:
 @cm:
 config t
-router eigrp M
+router eigrp 71
  no auto-summary
- network 10.m.100.0 0.0.0.255
+ network 10.71.100.0 0.0.0.255
 @CoreBAba:
 config t
 no router eigrp 100
 router eigrp 100
  no auto-summary
- network 10.m.100.0 0.0.0.255
- network 10.m.50.0 0.0.0.255
- network 10.m.10.0 0.0.0.255
- network 10.m.1.0 0.0.0.255
- network 10.m.m.0 0.0.0.255
+ network 10.71.100.0 0.0.0.255
+ network 10.71.50.0 0.0.0.255
+ network 10.71.10.0 0.0.0.255
+ network 10.71.1.0 0.0.0.255
+ network 10.71.71.0 0.0.0.255
 @eDGE:
 config t
 router eigrp 100
  no auto-summary
- network 10.m.m.0 0.0.0.255
+ network 10.71.71.0 0.0.0.255
  network 200.0.0.0 0.0.0.255
 
 how to eigrp if eigrp is working CORRECTLY?
