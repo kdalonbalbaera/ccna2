@@ -1,0 +1,335 @@
+tcp.flags.syn==1 && tcp.flags.ack==0
+
+
+
+TASK 3.1: DENY - CONFIGURE SUPER BASIC FIREWALL RULES: BLOCK PORN SITES
+
+conf t
+no ip access-list standard NOPORNFAP
+ip access-list standard NOPORNFAP
+DENY 66.254.0.0 0.0.255.255
+DENY 104.21.0.0 0.0.255.255
+DENY 68.235.0.0 0.0.255.255
+DENY 104.17.0.0 0.0.255.255
+DENY 88.208.0.0 0.0.255.255
+DENY 208.77.0.0 0.0.255.255
+DENY 172.67.0.0 0.0.255.255
+Permit Any
+Int Gi 1
+ip access-group NOPORNFAP in
+end
+
+
+
+
+TASK 3: ACCESS-LIST - CONFIGURE SUPER BASIC FIREWALL RULES: BLOCK PORN SITES
+
+conf t
+no access-list 1
+access-list 1 66.254.0.0 0.0.255.255
+access-list 1 104.21.0.0 0.0.255.255
+access-list 1 68.235.0.0 0.0.255.255
+access-list 1 104.17.0.0 0.0.255.255
+access-list 1 88.208.0.0 0.0.255.255
+access-list 1 208.77.0.0 0.0.255.255
+access-list 1 172.67.0.0 0.0.255.255
+access-list permit Any
+Int Gi 1
+ip access-group 1 in
+end
+
+
+
+TASK 5: 1ST BLUETEAM POLICY -  PROTECT GAMING SITES
+
+
+Protocol, Hacker, Victim, Port
+
+PORTS
+http: 80, https: 443, dns: 53, ssh: 22, telnet: 23
+
+
+config t
+NO ip access-list extended fwp1
+ip access-list extended fwp1
+permit tcp Any host www.web310.com eq 80 log
+permit tcp Any host www.web310.com eq 443 log
+permit icmp any host www.web310.com log
+
+
+permit tcp Any host www.web311.com eq 22 log
+permit tcp Any host www.web311.com eq 443 log
+permit tcp any host www.web311.com eq 53 log
+int gi 3
+
+ip access-group fwp1 in
+do sh ip access-list fwp1
+
+Remove policy:
+conf t
+int gi 3
+no ip access-group fwp1 in
+end
+
+TASK 5.2: create fwp2 with these services open: 
+www.web310.com is ping, https
+www.web310.com is dns --> 3 lines
+
+
+ip access-list extended fwp2
+permit tcp Any host www.web310.com eq 443 log
+permit icmp Any host www.web310.com log
+permit tcp any host www.web311.com eq 53 log
+int gi3
+NO ip access-list extended fwp2
+do sh ip access-list fwp1
+
+
+TASK 5.3: Create fwp3 with these services open:
+www.web310.com is http, https, dns, ssh
+www.web310.com is ping, telnet
+
+ip access-list extended fwp3
+permit tcp Any host www.web310.com eq 443 log
+permit tcp Any host www.web310.com eq 53 log
+permit tcp Any host www.web310.com eq 80 log
+permit tcp Any host www.web310.com eq 22 log
+permit icmp Any host www.web311.com log
+permit tcp Any host www.web311.com eq 22 log
+int gi3
+NO ip access-list extended fwp3
+do sh ip access-list fwp3
+
+
+TASK 5.4: CREATE A KAINNA WITH THESE SERVICES OPEN
+www.web310.com is https
+www.web311.com is https
+
+
+MAY THE BEST BLUE TEAM WIN
+TASK 5.5: CREATE A KAINNA WITH THESE SERVICES OPEN
+www.web310.com is https
+www.web311.com is https
+
+
+
+192.168.102.24/24   = NATIP: 208.8.8.124
+NAT BUILDING 4
+
+sudo su
+ifconfig eth0 192.168.102.24 netmask 255.255.255.0 up
+route add default gw 192.168.102.11
+ping 192.168.102.11
+ip nat inside source static 192.168.102.24 208.8.8.124
+
+
+BUILDING 1
+sudo su
+ifconfig eth0 192.168.103.221 netmask 255.255.255.0 up
+route add default gw 192.168.103.11
+ping 192.168.103.11
+
+
+BUILDING 2
+sudo su
+ifconfig eth0 192.168.103.222 netmask 255.255.255.0 up
+route add default gw 192.168.103.11
+ping 192.168.103.11
+
+
+CREATING PROXY
+
+conf t
+IP Nat inside source static tcp 192.168.103.221 80 208.8.8.69 8080
+IP Nat inside source static tcp 192.168.103.222 80 208.8.8.88 8080
+
+
+IPV6
+conf t
+ipv6 unicast-routing
+int gi 1
+ipv6 address fafa:dada:cafe:face::71/64
+
+ping fafa:dada:cafe:face::m
+
+
+SETTING UP IPV6 IP ADDRESS
+
+conf t
+ipv6 unicast-routing
+int gi 2
+ipv6 address fafa:afaf:baba:dada::ffff/64
+do sh ipv6 int brief
+end
+
+
+
+
+EX.1: SUBNET cafe:cafe:cafe:mm::/48 to 100 offices:
+C: 100 offices is 7 bits
+A: Add to Original /: /48+ /7 = /55
+Ipasok sa I: 
+	8  4  2   1    8  4  2   1     8  4  2   1    8  4  2   1 
+ 	0  0  0   0    0  0  0   x     x  x  x   x    x  x  x   x
+2nd Office
+	0  0  0   0    0  0  1   x     x  x  x   x    x  x  x   x
+3rd Office
+	0  0  0   0    0  1  0   x     x  x  x   x    x  x  x   x
+
+
+
+
+EX.2: SUBNET cafe:cafe:cafe:mm::/48 to 800 offices:
+C: 800 offices is 10 bits
+A: Add to Original /: /48+ /10 = /58
+
+Ipasok sa I: 
+	8  4  2   1    8  4  2   1     8  4  2   1    8  4  2   1 
+ 	0  0  0   0    0  0  0   0     0  0  x   x    x  x  x   x
+
+
+
+EX.3: SUBNET aaaa:bbbb:cccc:dddd::/64 to 40 offices:
+C: 40 offices is 6 bits
+A: Add to Original /: /40+ /6 = /46
+
+Ipasok sa I: 
+	8  4  2   1    8  4  2   1     8  4  2   1    8  4  2   1 
+ 	0  0  0   0    0  0  x   x     x  x  x   x    x  x  x   x 
+
+ 	0000
+	0400
+	0C00
+							          = 1000, 1004, 1008, 2000, 2400, 2800, 2C00, 3000, 3400, 3800
+
+
+int gi 2
+ipv6 address aaaa:bbbb:cccc:dddd:3800::f/70
+do ping aaaa:bbbb:cccc:dddd:3800::f/70
+
+
+
+
+
+EX.4: SUBNET face:face:face:mm::/48 to 1700 offices:
+C: 1700 offices is 11 bits
+A: Add to Original /: /48+ /11 = /59
+
+Ipasok sa I: 
+	8  4  2   1    8  4  2   1     8  4  2   1    8  4  2   1 
+ 	0  0  0   0    0  0  0   0     0  0  0   x    x  x  x   x 
+
+							          
+0000
+0020
+0040
+0060
+0080
+
+
+
+EX.4: SUBNET cafe:cafe:cafe:00_0::/48 to 4500 offices:
+C: 4500 offices is 13 bits
+A: Add to Original /: /48+ /13 = /61
+
+Ipasok sa I: 
+	8  4  2   1    8  4  2   1     8  4  2   1    8  4  2   1 
+ 	0  0  0   0    0  0  0   0     0  0  0   0    0  x  x   x
+
+			
+0000
+0008
+0010
+0018
+0020
+0028
+0030
+0038
+
+
+conf t
+int loopback 1
+ipv6 address cafe:cafe:cafe:0000::f/61
+
+int loopback 2
+ipv6 address cafe:cafe:cafe:0008::f/61
+
+int loopback 3
+ipv6 address cafe:cafe:cafe:0010::f/61
+
+int loopback 4
+ipv6 address cafe:cafe:cafe:0018::f/61
+
+int loopback 5
+ipv6 address cafe:cafe:cafe:0020::f/61
+
+int loopback 6
+ipv6 address cafe:cafe:cafe:0028::f/61
+
+int loopback 7
+ipv6 address cafe:cafe:cafe:0030::f/61
+
+int loopback 8
+ipv6 address cafe:cafe:cafe:0038::f/61
+
+int loopback 9
+ipv6 address cafe:cafe:cafe:0040::f/61
+
+int loopback 10
+ipv6 address cafe:cafe:cafe:0048::f/61
+
+
+
+
+
+EX.4: SUBNET fefe:fefe:fefe:fefe::/64 to 350 offices:
+C: 350 offices is 9 bits
+A: Add to Original /: /64 + /9 = /73
+
+Ipasok sa I: 
+	8  4  2   1    8  4  2   1     8  4  2   1    8  4  2   1 
+ 	0  0  0   0    0  0  0   0     0  x  x   x    x  x  x   x
+
+
+0000
+0080
+0100
+0180
+0200
+0280
+0300
+0380
+0400
+0038
+
+
+conf t
+int loopback 1
+ipv6 address fefe:fefe:0000:fefe::/64
+
+int loopback 2
+ipv6 address fefe:fefe:0080:fefe::/64
+
+int loopback 3
+ipv6 address fefe:fefe:0100:fefe::/64
+
+int loopback 4
+ipv6 address fefe:fefe:0180:fefe::/64
+
+int loopback 5
+ipv6 address fefe:fefe:0200:fefe::/64
+
+
+
+
+
+
+EX.4: SUBNET bebe:bebe:bebe:bebe::/64 to 2500 offices:
+C: 2500 offices is 12 bits
+A: Add to Original /: /64 + /12 = /76
+
+Ipasok sa I: 
+	8  4  2   1    8  4  2   1     8  4  2   1    8  4  2   1 
+ 	0  0  0   0    0  0  0   0     0  0  0   0    x  x  x   x
+
+
