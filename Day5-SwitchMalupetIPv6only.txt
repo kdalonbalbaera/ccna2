@@ -150,7 +150,7 @@ How to jailBreak forgotten Password:
 
 !@@@CORE SWITCH SA TAAS
 config t
-   hostname COREtaas_
+   hostname COREtaas71
    enable secret pass
    service password-encryption
    no logging console
@@ -165,19 +165,19 @@ config t
       exec-timeout 0 0
    Int Vlan 1
      no shutdown
-	 ip add 10._.1.2 255.255.255.0
+	 ip add 10.71.1.2 255.255.255.0
 	 description MGMTDATA
    Int Vlan 10
      no shutdown
-	 ip add 10._.10.2 255.255.255.0
+	 ip add 10.71.10.2 255.255.255.0
 	 description WIRELESS
    Int Vlan 50
      no shutdown
-	 ip add 10._.50.2 255.255.255.0
+	 ip add 10.71.50.2 255.255.255.0
 	 description IPCCTV
    Int Vlan 100
      no shutdown
-	 ip add 10._.100.2 255.255.255.0
+	 ip add 10.71.100.2 255.255.255.0
 	 description VOICEVLAN
 
 !@@@LeafSwitchONLY
@@ -198,18 +198,18 @@ config t
    Int Gi 0/1
      no shutdown
 	  no switchport
-	  ip add 10._._.4 255.255.255.0
+	  ip add 10.71.71.4 255.255.255.0
    Int Vlan 1
      no shutdown
-	 ip add 10._.1.4 255.255.255.0
+	 ip add 10.71.1.4 255.255.255.0
 	 description MGMTDATA
    Int Vlan 10
      no shutdown
-	 ip add 10._.10.4 255.255.255.0
+	 ip add 10.71.10.4 255.255.255.0
 	 description WIRELESS
    Int Vlan 50
      no shutdown
-	 ip add 10._.50.4 255.255.255.0
+	 ip add 10.71.50.4 255.255.255.0
 	 description IPCCTV
    Int Vlan 100
      no shutdown
@@ -362,14 +362,7 @@ end
 802.1WDoes NOT forgive Mistakes/KIll it.
 #sh int status err-disabled 
 TAAS: bounce/UP/down, bring BACK TO LIFE.
-config t
-int fa 0/3
- shut
- no shut
-int fa 0/7
- shut
- no shut
-end
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
 
 TASK11: Multiple instance STP: 802.1s
 Make FORCEs all CPU/Instances work to protect VLANs, cpu0 = is working 
