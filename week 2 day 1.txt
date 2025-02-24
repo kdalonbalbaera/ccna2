@@ -1,0 +1,54 @@
+recover-config
+
+
+Switch To Expert
+Management -> Admin Acc -> Radius
+
+
+TURN OFF FIREWALL
+
+powershell
+Set-NetFirewallProfile -name public, private, domain -Enabled false
+
+rename-computer W2022Radius21
+
+ncpa.cpl
+
+
+
+1. Configure the IPV4
+2. Add Roles -> Add ADDS
+3. Add Roles -> Add ADDS
+
+
+RadiusConfig:
+
+ADDS
+GROUP: wifiusers
+Anne Curtis, C1sc0123
+Kim Chiu, C1sc0123
+Kathryn Bernardo, C1sc0123
+Kayron Dav Balbaera, C1sc0123
+
+
+2. x.500 Root Certificate Authority
+3. NetworkPolicyServer: 802.1x Wireless Policy
+
+
+Taas/Baba:
+
+conf t
+AAA new-model
+username admin password pass
+radius-server host 10.21.1.8 key aaaaaaaa
+ip radius source-interference vlan 1
+aaa authorization exec defaut group radius
+aaa authetication login default group radius local
+line vty 0 14
+login authentication default
+end
+
+
+DELETE THE DEFAULT IN WLAN CONFUGRATION IN CISCO GUI
+
+
