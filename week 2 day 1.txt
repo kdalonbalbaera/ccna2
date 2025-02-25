@@ -1,129 +1,134 @@
+WEEK 2: CISCO WIRELESS CONTROLLER CONFIGURATION
 
 1. PUT THE CONSOLE TO CORE BABA THEN CONFIGURE IT (Telnet: 10.m.1.4)
+
 2. PUT THE CONSOLE TO THE CISCO (10.m.10.m)
 
-recover-config
-
-3. Go to http://10.m.10.102/ to set up the Cisco Aironet Username and Password. Wait to Reboot
-4. Go to https://10.21.10.21/ to access the Dashboard
+    recover-config
 
 
-5. Install the VM Windows Server 2022
-Memory: 80GB
-Core: 2 and 2
-Network: Bridge Replicate
+3. Go to http://10.m.10.102/ to set up the Cisco Aironet Username and Password. Apply changes and wait to reboot.
+
+4. Go to https://10.m.10.m/ to access the Dashboard.
+
+5. Install the Windows Server 2022 on VMWare
+- Virtual Machine Settings
+    Memory: 80GB
+    Core: 2 and 2
+    Network: Bridge Replicate
 
 
-- Change IPV4 Address of VM
+- Change the IPV4 Address of VM Server
+    IP Address: 10.m.1.8
+    Subnet Mask: 255.255.255.0
+    Default Gateway: 10.m.1.4
+    Preferred DNS Server: 127.0.0.1
 
-IP Address: 10.m.1.8
-Subnet Mask: 255.255.255.0
-Default Gateway: 10.21.1.4
+    - Click "Advanced..." --> DNS
+        Append these DNS suffixes (in order): --> Add
+        rad21.com
+        DNS suffix for this correction: rad21.com
 
-Advanced DNS
-Append these DNS suffixes
-rad21.com
-
-DNS suffix for this correction: rad21.com
-
-
-
-Go to CMD to check: ipconfig
-
-GO TO CISCO AIRONET
-
-IN EXPERT VIEW
-SET UP RADIUS
-Server IP Address: 10.21.1.8
-Shared Secret: aaaaaaaa
-
-
-SET UP WLANs
-Enable Guest Network
-Add RADIUS AUTHENTICATION SERVER
+- Go to CMD and check if rad21.com can be seen in the ipconfig
+  ipconfig
 
 
 
-IN VM WINDOWS SERVER TURN OFF FIREWALL
+6. GO TO THE DASHBOARD OF CISCO AIRONET
 
-powershell
-Set-NetFirewallProfile -name public, private, domain -Enabled false
-
-rename-computer W2022Radius21
-
-
-
-ADD ROLES: ADDS
-Reboot
-Promote this server
-Add new forest
-Root domain name: rad21.com
-Password: C1sc0123
+- Change to Expert View
+- Go to Management --> Admin Accounts
+- SET UP RADIUS (Add RADIUS Authentication Server)
+    Server IP Address: 10.m.1.8
+    Shared Secret: aaaaaaaa
 
 
-DNS MANAGER
+- SET UP WLANs (Wireless Settings --> WLANs)
 
-Create new zone in Reverse Lookup Zone
-Network ID 10.21.1
+  Profile Name: capportalm
 
-Dropdown Foward Lookup Zone-> Right click on rad21.com -> New Host (A or AAA)
-Name: wc
-Fully qualified domain name: wc.rad21.com
-IP address: 10.21.10.21
-Check Create associate PTR record.
+  - WLAN Security Tab
+      Radius Compatibility: Other
+      Security Type: WPA2Enterprise
+      Authentication Server: External Radius
 
+  - Add RADIUS AUTHENTICATION SERVER
+      Select "10.m.1.8"
 
-
-
-ADD ROLES: Active Directory Certificate Services
-Certificate Authority only checked
-Notification - > AD CS Configure
-
-Enterprise CA
-Specify the Validity Period: 2 years
+  - OPTIONAL (Enable Guest Network and Guest WLANs)
+    
 
 
-ADD ROLES: Network Policy and Access Services
+7. WINDOWS SERVER 2022 SET UP
+
+  - Turn off the firewall using CMD
+    powershell
+    Set-NetFirewallProfile -name public, private, domain -Enabled false
+  
+  - Rename computer using CMD
+    rename-computer W2022Radius21
 
 
-GO TO Active Directory Users and Computer
-Add OU: WIFIGROUP
-  Add Users
-  Add Group
-  Group Name: WIFIUSERS
-
-1. Configure the IPV4
-2. Add Roles -> Add ADDS
-3. Add Roles -> Add ADDS
+8. Add Roles and Features: ADDS (Active Directory Domain Services)
+  Reboot after installation
+  Promote this server
+  Add new forest
+  Root domain name: rad21.com
+  Password: C1sc0123
 
 
+9. DNS Manager (Set up the Reverse and Forward Lookup Zone)
 
-GO TO Network Policy Server
-DROPDOWN -> RADIUS Client and Servers -> RADIUS Clients -> Right-Click -> New
+  Reverse Lookup Zone --> Create new zone
+  Network ID 10.21.1
 
-Friendly Name: wc
-Address: 10.21.10.21
-Shared Secret: aaaaaaaa
-
-
-RADIUS Clients -> Right-Click -> New
-
-Friendly Name: cb
-Address: 10.21.1.4
-Shared Secret: aaaaaaaa
+  Dropdown Foward Lookup Zone-> Right click on rad21.com -> New Host (A or AAA)
+  Name: wc
+  Fully qualified domain name: wc.rad21.com
+  IP address: 10.21.10.21
+  Check on "Create associate PTR record"
 
 
 
-NPS (Local)
-Dropdown
-Select RADIUS server for 802/1X Wireless or Wired Connections
-Configure
-Select Secure Wireless Connections
+10. Add Roles and Features: Active Directory Certificate Services
+  Certificate Authority only checked
 
-Name: captive portal policy 1
-Select wc
-Type: Miscrosoft: Protected EAP (PEAP)
-Groups: wifigroup
+  Check Notification - > AD CS Configure
+      Enterprise CA
+      Specify the Validity Period: 2 years
+
+
+11. Add Roles and Features: Network Policy and Access Services
+
+  - Go to Active Directory Users and Computer
+    Add OU: WIFIGROUP
+    Add Users
+    Add Group --> Group Name: WIFIUSERS
+
+
+12. Go to Network Policy Server
+
+  - Dropdown -> RADIUS Client and Servers --> RADIUS Clients --> Right-Click --> New
+      Friendly Name: wc
+      Address: 10.21.10.21
+      Shared Secret: aaaaaaaa
+
+
+  - RADIUS Clients --> Right-Click --> New
+      Friendly Name: cb
+      Address: 10.21.1.4
+      Shared Secret: aaaaaaaa
+
+  - Go to NPS (Local) page
+      Select a configuration scenario from the list --> Dropdown --> RADIUS server for 802/1X Wireless or Wired Connections
+      Click the "Configure 802.1x" button
+
+      Type of 802.1x connections: Secure Wireless Connections
+      
+      Name: captive portal policy 1
+      Select wc
+      Type: Miscrosoft: Protected EAP (PEAP)
+      Groups: wifigroup
 
 
 
