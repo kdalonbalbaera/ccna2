@@ -8,6 +8,44 @@ recover-config
 4. Go to https://10.21.10.21/ to access the Dashboard
 
 
+5. Install the VM Windows Server 2022
+Memory: 80GB
+Core: 2 and 2
+Network: Bridge Replicate
+
+
+- Change IP Address
+
+IP Address: 10.m.1.8
+Subnet Mask: 255.255.255.0
+Default Gateway: 10.21.1.4
+
+Advanced DNS
+Append these DNS suffixes
+rad21.com
+
+DNS suffix for this correction: rad21.com
+
+
+
+Go to CMD to check: ipconfig
+
+
+
+
+GO TO CISCO AIRONET
+
+IN EXPERT VIEW
+SET UP RADIUS
+Server IP Address: 10.21.1.8
+Shared Secret: aaaaaaaa
+
+
+SET UP WLANs
+Enable Guest Network
+Add RADIUS AUTHENTICATION SERVER
+
+
 
 Switch To Expert
 Management -> Admin Acc -> Radius
