@@ -5,9 +5,11 @@ WEEK 2: CISCO WIRELESS CONTROLLER CONFIGURATION
 2. PUT THE CONSOLE TO THE CISCO (10.m.10.m)
 
     recover-config
-
+    show ip dhcp binding (after reboot... check in CoreBaba --> 10.m.10.102 0100.005e.0001.01)
 
 3. Go to http://10.m.10.102/ to set up the Cisco Aironet Username and Password. Apply changes and wait to reboot.
+
+    save config
 
 4. Go to https://10.m.10.m/ to access the Dashboard.
 
