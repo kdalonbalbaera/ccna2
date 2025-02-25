@@ -138,10 +138,10 @@ conf t
 AAA new-model
 username admin password pass
 radius-server host 10.21.1.8 key aaaaaaaa
-ip radius source-interference vlan 1
-aaa authorization exec defaut group radius
-aaa authetication login default group radius local
-line vty 0 14
+ip radius source-interface vlan 1
+aaa authorization exec default group radius
+aaa authentication login default group radius local
+line vty 0 4
 login authentication default
 end
 
