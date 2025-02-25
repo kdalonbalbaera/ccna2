@@ -97,6 +97,42 @@ Add OU: WIFIGROUP
 3. Add Roles -> Add ADDS
 
 
+
+GO TO Network Policy Server
+DROPDOWN -> RADIUS Client and Servers -> RADIUS Clients -> Right-Click -> New
+
+Friendly Name: wc
+Address: 10.21.10.21
+Shared Secret: aaaaaaaa
+
+
+RADIUS Clients -> Right-Click -> New
+
+Friendly Name: cb
+Address: 10.21.1.4
+Shared Secret: aaaaaaaa
+
+
+
+NPS (Local)
+Dropdown
+Select RADIUS server for 802/1X Wireless or Wired Connections
+Configure
+Select Secure Wireless Connections
+
+Name: captive portal policy 1
+Select wc
+Type: Miscrosoft: Protected EAP (PEAP)
+Groups: wifigroup
+
+
+
+
+
+
+
+
+
 RadiusConfig:
 
 ADDS
