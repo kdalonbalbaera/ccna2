@@ -54,12 +54,33 @@ rename-computer W2022Radius21
 
 
 ADD ROLES: ADDS
+Reboot
+Promote this server
+Add new forest
+Root domain name: rad21.com
+Password: C1sc0123
+
+
+DNS MANAGER
+
+Create new zone in Reverse Lookup Zone
+Network ID 10.21.1
+
+Dropdown Foward Lookup Zone-> Right click on rad21.com -> New Host (A or AAA)
+Name: wc
+Fully qualified domain name: wc.rad21.com
+IP address: 10.21.10.21
+Check Create associate PTR record.
 
 
 
 
+ADD ROLES: Active Directory Certificate Services
+Certificate Authority only checked
+Enterprise CA
+Specify the Validity Period: 2 years
 
-
+ADD ROLES: Network Policy and Access Services
 
 
 
