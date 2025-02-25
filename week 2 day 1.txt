@@ -14,7 +14,7 @@ Core: 2 and 2
 Network: Bridge Replicate
 
 
-- Change IP Address
+- Change IPV4 Address of VM
 
 IP Address: 10.m.1.8
 Subnet Mask: 255.255.255.0
@@ -30,9 +30,6 @@ DNS suffix for this correction: rad21.com
 
 Go to CMD to check: ipconfig
 
-
-
-
 GO TO CISCO AIRONET
 
 IN EXPERT VIEW
@@ -47,18 +44,23 @@ Add RADIUS AUTHENTICATION SERVER
 
 
 
-Switch To Expert
-Management -> Admin Acc -> Radius
-
-
-TURN OFF FIREWALL
+IN VM WINDOWS SERVER TURN OFF FIREWALL
 
 powershell
 Set-NetFirewallProfile -name public, private, domain -Enabled false
 
 rename-computer W2022Radius21
 
-ncpa.cpl
+
+
+ADD ROLES: ADDS
+
+
+
+
+
+
+
 
 
 
