@@ -132,27 +132,7 @@ WEEK 2: CISCO WIRELESS CONTROLLER CONFIGURATION
 
 
 
-
-
-
-
-
-
-RadiusConfig:
-
-ADDS
-GROUP: wifiusers
-Anne Curtis, C1sc0123
-Kim Chiu, C1sc0123
-Kathryn Bernardo, C1sc0123
-Kayron Dav Balbaera, C1sc0123
-
-
-2. x.500 Root Certificate Authority
-3. NetworkPolicyServer: 802.1x Wireless Policy
-
-
-Taas/Baba:
+13. COREBABA
 
 conf t
 AAA new-model
@@ -164,8 +144,5 @@ aaa authetication login default group radius local
 line vty 0 14
 login authentication default
 end
-
-
-DELETE THE DEFAULT IN WLAN CONFUGRATION IN CISCO GUI
 
 
