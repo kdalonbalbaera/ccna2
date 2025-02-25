@@ -77,13 +77,20 @@ Check Create associate PTR record.
 
 ADD ROLES: Active Directory Certificate Services
 Certificate Authority only checked
+Notification - > AD CS Configure
+
 Enterprise CA
 Specify the Validity Period: 2 years
+
 
 ADD ROLES: Network Policy and Access Services
 
 
-
+GO TO Active Directory Users and Computer
+Add OU: WIFIGROUP
+  Add Users
+  Add Group
+  Group Name: WIFIUSERS
 
 1. Configure the IPV4
 2. Add Roles -> Add ADDS
