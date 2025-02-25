@@ -1,4 +1,12 @@
+
+1. PUT THE CONSOLE TO CORE BABA THEN CONFIGURE IT (Telnet: 10.m.1.4)
+2. PUT THE CONSOLE TO THE CISCO (10.m.10.m)
+
 recover-config
+
+3. Go to http://10.m.10.102/ to set up the Cisco Aironet Username and Password. Wait to Reboot
+4. Go to https://10.21.10.21/ to access the Dashboard
+
 
 
 Switch To Expert
