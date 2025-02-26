@@ -618,6 +618,19 @@ conf t
     username 7182 password 7182
     codec g711ulaw
 !
+
+
+
+LINPHONE CONFIGURATION
+
+Username: 7181
+Password: 7181
+Domain: 10.71.100.8
+TCP
+
+
+
+
 *******call other countries!!!********
 config t
 !
